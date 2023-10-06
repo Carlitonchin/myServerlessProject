@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "graceful-fs": "^4.2.11",
+    "serverless-s3-sync": "^3.2.0",
+    "serverless-webpack": "^5.13.0",
+    "webpack": "^5.88.2"
+  }
+}
