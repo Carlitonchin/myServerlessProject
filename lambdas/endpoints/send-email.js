@@ -5,7 +5,7 @@ const buyTemplate = require("../templates/buy");
 const handler = async (event) => {
   try {
     await ses.send(
-      `"Fred Foo 👻" <design@claudiamarin.com>`,
+      `carlozalejandro98@gmail.com`,
       "carlozalejandro98@gmail.com",
       buyTemplate([
         { quantity: 1, description: "Camisa" },
