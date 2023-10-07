@@ -23,6 +23,7 @@ frameworkVersion: "3"
 provider:
   name: aws
   runtime: nodejs18.x
+  region: sa-east-1
   environment:
     tableName: ${self:custom.tableName}
     region: ${self:custom.region}
@@ -34,6 +35,7 @@ provider:
           Action:
             - dynamodb:*
             - s3:*
+            - ses:*
           Resource: "*"
 
 # you can overwrite defaults here
@@ -121,6 +123,14 @@ functions:
           path: hello-world
           cors: true
           method: GET
+
+  send-email:
+    handler: lambdas/endpoints/send-email.handler
+    events:
+      - http:
+          path: send-email
+          cors: true
+          method: POST
 
   get-file:
     handler: lambdas/endpoints/get-file.handler
