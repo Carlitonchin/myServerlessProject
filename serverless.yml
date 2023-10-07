@@ -23,7 +23,18 @@ frameworkVersion: "3"
 provider:
   name: aws
   runtime: nodejs18.x
-  profile: serverlessUser
+  environment:
+    tableName: ${self:custom.tableName}
+    region: ${self:custom.region}
+    bucketName: ${self:custom.bucketName}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:*
+            - s3:*
+          Resource: "*"
 
 # you can overwrite defaults here
 #  stage: dev
@@ -67,15 +78,50 @@ package:
 
 custom:
   tableName: players-points
+  region: us-east-1
+  bucketName: carlitonchin-bucket-serverless-tutorial
 
 functions:
   get-user:
-    handler: lambdas/get-user.handler
+    handler: lambdas/endpoints/get-user.handler
     events:
       - http:
           path: get-user/{ID}
           cors: true
           method: GET
+
+  get-user-score:
+    handler: lambdas/endpoints/get-user-score.handler
+    events:
+      - http:
+          path: get-user-score/{ID}
+          cors: true
+          method: GET
+
+  create-user-score:
+    handler: lambdas/endpoints/create-user-score.handler
+    events:
+      - http:
+          path: create-user-score
+          cors: true
+          method: POST
+
+  create-file:
+    handler: lambdas/endpoints/create-file.handler
+    events:
+      - http:
+          path: create-file/{fileName}
+          cors: true
+          method: POST
+
+  get-file:
+    handler: lambdas/endpoints/get-file.handler
+    events:
+      - http:
+          path: get-file/{fileName}
+          cors: true
+          method: GET
+
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -122,7 +168,7 @@ resources:
     DemoBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: carlitonchin-bucket-serverless-tutorial
+        BucketName: ${self:custom.bucketName}
 
     DynamoDBTable:
       Type: AWS::DynamoDB::Table

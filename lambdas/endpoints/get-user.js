@@ -1,4 +1,5 @@
-const responses = require("./Api_Responses");
+const responses = require("../common/Api_Responses");
+
 const handler = async (event) => {
   const id = event?.pathParameters?.ID;
 
@@ -18,5 +19,3 @@ const data = {
   2: { name: "Claudia Arrieta", age: 27, job: "Communication Expert" },
   3: { name: "Roberto fonseca", age: 35, job: "Body Builder" },
 };
-
-console.log(handler({ pathParameters: { ID: 1 } }));
