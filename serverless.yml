@@ -114,6 +114,14 @@ functions:
           cors: true
           method: POST
 
+  hello-world:
+    handler: lambdas/endpoints/hello-world.handler
+    events:
+      - http:
+          path: hello-world
+          cors: true
+          method: GET
+
   get-file:
     handler: lambdas/endpoints/get-file.handler
     events:
